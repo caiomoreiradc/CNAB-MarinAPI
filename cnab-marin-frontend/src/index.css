@@ -1,0 +1,96 @@
+
+@import url('https://rsms.me/inter/inter.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 11%;
+    --primary: 0 73% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 11%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 11%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 73% 59%;
+    --radius: 12px;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Remove focus outline by default */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Better focus styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2;
+  }
+}
+
+@layer components {
+  .transition-all-200 {
+    @apply transition-all duration-200 ease-in-out;
+  }
+
+  .transition-transform-300 {
+    @apply transition-transform duration-300 ease-out;
+  }
+
+  .glass-effect {
+    @apply bg-white/90 backdrop-blur-md border border-white/30 shadow-lg;
+  }
+
+  .file-drop-area {
+    @apply relative border-2 border-dashed rounded-xl p-10 transition-all-200 flex flex-col items-center justify-center space-y-4;
+  }
+
+  .file-drop-area.active {
+    @apply border-primary bg-primary/5;
+  }
+
+  .button-primary {
+    @apply px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium transition-all hover:shadow-md active:scale-[0.98] inline-flex items-center justify-center;
+  }
+
+  .data-table {
+    @apply w-full bg-white rounded-xl overflow-hidden shadow-sm;
+  }
+
+  .data-table th {
+    @apply px-6 py-4 text-left text-sm font-medium text-muted-foreground bg-secondary border-b;
+  }
+
+  .data-table td {
+    @apply px-6 py-4 text-sm border-b border-border;
+  }
+
+  .data-table tbody tr {
+    @apply hover:bg-secondary/50 transition-colors;
+  }
+}
