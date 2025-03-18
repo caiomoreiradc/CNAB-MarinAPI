@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CNAB_MarinAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250318174233_Inicial")]
+    [Migration("20250318205657_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -62,10 +62,10 @@ namespace CNAB_MarinAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DataMovimentacao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("DataMovimentacao")
+                        .HasColumnType("date");
 
-                    b.Property<TimeSpan>("HoraMovimentacao")
+                    b.Property<TimeOnly>("HoraMovimentacao")
                         .HasColumnType("time");
 
                     b.Property<int>("LojaId")

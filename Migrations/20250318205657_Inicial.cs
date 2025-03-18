@@ -33,11 +33,11 @@ namespace CNAB_MarinAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LojaId = table.Column<int>(type: "int", nullable: false),
                     Tipo = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    DataMovimentacao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataMovimentacao = table.Column<DateOnly>(type: "date", nullable: false),
                     Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cartao = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HoraMovimentacao = table.Column<TimeSpan>(type: "time", nullable: false),
+                    HoraMovimentacao = table.Column<TimeOnly>(type: "time", nullable: false),
                     Natureza = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Sinal = table.Column<string>(type: "nvarchar(1)", nullable: false)
                 },

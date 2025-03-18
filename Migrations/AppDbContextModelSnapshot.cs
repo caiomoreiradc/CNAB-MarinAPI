@@ -59,10 +59,10 @@ namespace CNAB_MarinAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DataMovimentacao")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("DataMovimentacao")
+                        .HasColumnType("date");
 
-                    b.Property<TimeSpan>("HoraMovimentacao")
+                    b.Property<TimeOnly>("HoraMovimentacao")
                         .HasColumnType("time");
 
                     b.Property<int>("LojaId")
