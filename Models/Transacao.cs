@@ -11,7 +11,7 @@
         public string CPF { get; set; }
         public string Cartao { get; set; }
         public TimeSpan HoraMovimentacao { get; set; }
-        public string Natureza { get; set; }
-        public char Sinal { get; set; }
+        public string Natureza { get; set; } //Será Mapeado depois
+        public char Sinal { get; set; } //Será Mapeado depois
     }
 }
