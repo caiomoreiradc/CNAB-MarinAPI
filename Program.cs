@@ -1,4 +1,14 @@
+using CNAB_MarinAPI;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Adicionanndo o Contexto
+builder.Services.AddControllers()
+    .AddNewtonsoftJson();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
