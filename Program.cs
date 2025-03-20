@@ -19,6 +19,7 @@ builder.Services.AddSwaggerGen();
 //Registrando Serviço
 builder.Services.AddScoped<CnabService>();
 builder.Services.AddScoped<TransacaoService>();
+builder.Services.AddScoped<LojaService>();
 
 // Habilitando CORS
 builder.Services.AddCors(options =>
@@ -41,7 +42,11 @@ if (!app.Environment.IsDevelopment())
 app.UseCors("AllowAll"); // Adicionando CORS aqui!
 
 app.UseSwagger(); // Ativa o Swagger
-app.UseSwaggerUI(); // Interface do Swagger
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "CNAB API MARIN LOG");
+    c.RoutePrefix = "";
+});
 
 app.UseHttpsRedirection();
 app.UseRouting();
@@ -51,6 +56,5 @@ app.UseAuthorization();
 app.MapStaticAssets();
 
 app.MapControllers();
-
 
 app.Run();

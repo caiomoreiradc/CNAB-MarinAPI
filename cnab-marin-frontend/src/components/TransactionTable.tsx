@@ -17,14 +17,19 @@ import {
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
+interface Loja {
+    nome: string
+}
+
 interface Transaction {
     tipo: number;
     dataMovimentacao: string;
     valor: number;
     cpf: string;
     cartao: string;
-    loja: string;
+    loja: Loja;
     natureza: string;
+    horaMovimentacao: string;
 }
 
 interface TransactionTableProps {
@@ -59,21 +64,23 @@ const formatCurrency = (value: number) => {
     }).format(value);
 };
 
-const formatDate = (dateString: string) => {
+const formatDateTime = (dateString: string , horaMovimentacao: string) => {
     if (!dateString || typeof dateString !== "string") return "Data inválida";
 
-    // Garante que o formato esteja correto (YYYY-MM-DD)
     const [year, month, day] = dateString.split("-");
     if (!year || !month || !day) return "Data inválida";
 
-    return `${day}/${month}/${year}`;
+    return `${day}/${month}/${year}` + ` ${horaMovimentacao}`;
+};
+
+const formatCpf = (cpf: string) => {
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
 };
 
 const decodeUtf8 = (text: string): string => {
     try {
         return text;
     } catch (error) {
-        console.error("Error decoding text:", error);
         return text;
     }
 };
@@ -98,10 +105,10 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions }) => 
     });
 
     const filteredTransactions = sortedTransactions.filter(transaction => {
-        const searchLower = searchTerm.toLowerCase();
+       const searchLower = searchTerm.toLowerCase();
         return (
-            (transaction.loja && transaction.loja.toLowerCase().includes(searchLower)) ||
-            String(transaction.valor).includes(searchTerm) ||
+            (transaction.loja && transaction.loja.nome.toLowerCase().includes(searchLower)) ||
+           String(transaction.valor).includes(searchTerm) ||
             String(transaction.tipo).includes(searchTerm) ||
             getTransactionType(transaction.tipo).name.toLowerCase().includes(searchLower)
         );
@@ -128,7 +135,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions }) => 
                     <div className="relative w-full max-w-sm">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                         <Input
-                            placeholder="Search transactions..."
+                            placeholder="Buscando transações..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             className="pl-10"
@@ -146,8 +153,8 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions }) => 
                             <thead>
                                 <tr>
                                     <th><button onClick={() => handleSort('tipo')}>Tipo {renderSortIndicator('tipo')}</button></th>
-                                    <th><button onClick={() => handleSort('dataMovimentacao')}>Data {renderSortIndicator('dataMovimentacao')}</button></th>
-                                    <th><button onClick={() => handleSort('valor')}>Data {renderSortIndicator('valor')}</button></th>
+                                    <th><button onClick={() => handleSort('dataMovimentacao')}>Data e Hora {renderSortIndicator('dataMovimentacao')}</button></th>
+                                    <th><button onClick={() => handleSort('valor')}>Valor {renderSortIndicator('valor')}</button></th>
                                     <th>CPF</th>
                                     <th>Cartão</th>
                                     <th>Loja</th>
@@ -160,11 +167,11 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions }) => 
                                     return (
                                         <tr key={index} className="border-t">
                                             <td className={`${transactionType.color}`}>{transactionType.icon} {transactionType.name}</td>
-                                            <td>{formatDate(transaction.dataMovimentacao)}</td>
+                                            <td>{formatDateTime(transaction.dataMovimentacao, transaction.horaMovimentacao)}</td>
                                             <td>{formatCurrency(transaction.valor)}</td>
-                                            <td>{transaction.cpf}</td>
+                                            <td>{formatCpf(transaction.cpf)}</td>
                                             <td>{transaction.cartao}</td>
-                                            <td>{decodeUtf8(transaction.loja)}</td>
+                                            <td>{decodeUtf8(transaction.loja.nome)}</td>
                                             <td>{transaction.natureza}</td>
                                         </tr>
                                     );

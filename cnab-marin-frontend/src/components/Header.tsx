@@ -4,8 +4,9 @@ import Logo from './Logo';
 import { motion } from 'framer-motion';
 
 const Header: React.FC = () => {
-  return (
-    <header className="sticky top-0 z-10 glass-effect px-6 py-4">
+    return (
+
+      <header className="sticky top-0 z-10 glass-effect px-6 py-4">
       <div className="container mx-auto flex items-center justify-between">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}

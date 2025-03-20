@@ -1,4 +1,5 @@
 ﻿using CNAB_MarinAPI.Models;
+using CNAB_MarinAPI.DTOs;
 using System.Globalization;
 
 namespace CNAB_MarinAPI.Services
@@ -25,9 +26,13 @@ namespace CNAB_MarinAPI.Services
             { '9', ("Saída", '-') }
         };
 
-        public void ProcessarArquivo(string caminhoArquivo)
+        public int ProcessarArquivo(string caminhoArquivo)
         {
             var linhas = File.ReadAllLines(caminhoArquivo);
+            var qtdLinhas = linhas.Length;
+
+            //dicionário para armazenar lojas já carregadas na memória
+            var lojasCache = _context.Lojas.ToDictionary(l => (l.Nome, l.Dono));
 
             foreach (var linha in linhas)
             {
@@ -37,18 +42,27 @@ namespace CNAB_MarinAPI.Services
                 var lojaNome = linha.Substring(62).Trim();
                 var dono = linha.Substring(48, 14).Trim();
 
-                var loja = _context.Lojas.FirstOrDefault(l => l.Nome == lojaNome) ??
-                           new Loja { Nome = lojaNome, Dono = dono };
+                // verificar dicionario primeiro
+                if (!lojasCache.TryGetValue((lojaNome, dono), out var loja))
+                {
+                    loja = new Loja { Nome = lojaNome, Dono = dono, Saldo = 0 };
+                    _context.Lojas.Add(loja);
+                    lojasCache.Add((lojaNome, dono), loja); // add no dic
+                }
+
+                // processa a transação e atualiza o saldo da loja
+                var valor = decimal.Parse(linha.Substring(9, 10)) / 100;
+                loja.Saldo += (sinal == '-') ? -valor : valor;
 
                 var transacao = new Transacao
                 {
                     Loja = loja,
                     Tipo = tipo,
-                    DataMovimentacao = DateOnly.ParseExact(linha.Substring(1, 8), "yyyyMMdd", CultureInfo.InvariantCulture), // Índices 2-9 (data)
-                    Valor = decimal.Parse(linha.Substring(9, 10)) / 100, // Índices 10-19 (valor)
-                    CPF = linha.Substring(19, 11), // Índices 20-30 (CPF)
-                    Cartao = linha.Substring(30, 12), // Índices 31-42 (cartão)
-                    HoraMovimentacao = TimeOnly.ParseExact(linha.Substring(42, 6), "HHmmss", CultureInfo.InvariantCulture), // Índices 43-48 (hora)
+                    DataMovimentacao = DateOnly.ParseExact(linha.Substring(1, 8), "yyyyMMdd", CultureInfo.InvariantCulture),
+                    Valor = valor,
+                    CPF = linha.Substring(19, 11),
+                    Cartao = linha.Substring(30, 12),
+                    HoraMovimentacao = TimeOnly.ParseExact(linha.Substring(42, 6), "HHmmss", CultureInfo.InvariantCulture),
                     Natureza = natureza,
                     Sinal = sinal
                 };
@@ -57,8 +71,28 @@ namespace CNAB_MarinAPI.Services
             }
 
             _context.SaveChanges();
+            return qtdLinhas;
         }
 
+        // calcular o saldo de uma loja
+        public LojaSaldoDTO ObterSaldoLoja(string nomeLoja)
+        {
+            var loja = _context.Lojas.FirstOrDefault(l => l.Nome == nomeLoja);
+            if (loja == null)
+            {
+                return null;
+            }
 
+            var saldo = _context.Transacoes
+                .Where(t => t.Loja.Nome == nomeLoja)
+                .Sum(t => t.Valor);
+
+            return new LojaSaldoDTO
+            {
+                NomeLoja = loja.Nome,
+                Dono = loja.Dono,
+                Saldo = saldo
+            };
+        }
     }
 }

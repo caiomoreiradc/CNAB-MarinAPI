@@ -19,8 +19,5 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="8.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CNAB-Marin-Frontend\cnab-marin-frontend.esproj" />
-  </ItemGroup>
 
 </Project>

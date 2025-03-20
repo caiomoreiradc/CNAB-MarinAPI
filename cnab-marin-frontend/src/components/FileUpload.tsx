@@ -7,12 +7,16 @@ interface FileUploadProps {
   onFileUploadComplete: (transactions: Transaction[]) => void;
 }
 
+interface Loja {
+    nome: string
+}
+
 interface Transaction {
   tipo: number;
   descricao: string;
   data: string;
   valor: number;
-  loja: string;
+  loja: Loja;
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({ onFileUploadComplete }) => {
@@ -69,27 +73,31 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUploadComplete }) => {
         body: formData,
       });
 
-      if (response.ok) {
-        const data: Transaction[] = await response.json();
-        onFileUploadComplete(data);
-        toast({
-          title: "Upload concluído com sucesso",
-          description: `${data.length} transações processadas.`,
-        });
-      } else {
-        const errorData = await response.json();
-        toast({
-          variant: "destructive",
-          title: "Upload falhou",
-          description: errorData.message || "Erro ao fazer upload do arquivo.",
-        });
-      }
+
+        if (response.ok) {
+            let processedCount = 0;
+
+            const text = await response.text();
+            if (text) {
+                const json = JSON.parse(text);
+                processedCount = json.processedCount || 0;
+            }
+
+            onFileUploadComplete([]);
+
+            toast({
+                title: "Upload concluÃ­do com sucesso",
+                description: `${processedCount} transaÃ§Ãµes processadas.`,
+            });
+
+            window.location.reload();
+        }
+
     } catch (error) {
-      console.error("Erro no upload:", error);
       toast({
         variant: "destructive",
         title: "Upload falhou",
-        description: "Não foi possível conectar ao servidor",
+        description: "NÃ£o foi possÃ­vel conectar ao servidor",
       });
     } finally {
       setIsUploading(false);

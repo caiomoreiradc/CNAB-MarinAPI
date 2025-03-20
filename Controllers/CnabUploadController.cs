@@ -27,8 +27,11 @@ namespace CNAB_MarinAPI.Controllers
                 await file.CopyToAsync(stream);
             }
 
-            _cnabService.ProcessarArquivo(filePath);
-            return Ok("Arquivo processado com sucesso!");
+
+            // Processa o arquivo e retorna o número de linhas processadas
+            int linhasProcessadas = _cnabService.ProcessarArquivo(filePath);
+
+            return Ok(new { processedCount = linhasProcessadas });
         }
     }
 }

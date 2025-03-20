@@ -12,9 +12,17 @@ namespace CNAB_MarinAPI.Services
             _context = context;
         }
 
-        public async Task<List<Transacao>> GetAllTransacoes()
+        public List<Transacao> GetAllTransacoes()
         {
-            var transactions = await _context.Transacoes.ToListAsync();
+            var transactions =  _context.Transacoes.ToList();
+
+            foreach(Transacao transacao in transactions)
+            {
+                var lojas = _context.Lojas.FirstOrDefault(x => x.Id == transacao.LojaId);
+                lojas.Transacoes = null;
+                transacao.Loja = lojas; 
+            }
+
             return transactions;
         }
 

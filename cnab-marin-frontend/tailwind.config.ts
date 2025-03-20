@@ -19,7 +19,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				sans: ['Inter var', 'sans-serif'],
+				sans: ['Gidole var', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

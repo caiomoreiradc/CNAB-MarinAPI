@@ -17,9 +17,9 @@ namespace CNAB_MarinAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Transacao>>> GetAllTransactions()
+        public  ActionResult<IEnumerable<Transacao>> GetAllTransactions()
         {
-            var transactions = await _transacaoService.GetAllTransacoes();
+            var transactions =  _transacaoService.GetAllTransacoes();
             return Ok(transactions);
         }
 
