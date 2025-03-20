@@ -17,8 +17,8 @@ namespace CNAB_MarinAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Dono = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nome = table.Column<string>(type: "nvarchar(35)", nullable: false),
+                    Dono = table.Column<string>(type: "nvarchar(42)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,10 +35,10 @@ namespace CNAB_MarinAPI.Migrations
                     Tipo = table.Column<string>(type: "nvarchar(1)", nullable: false),
                     DataMovimentacao = table.Column<DateOnly>(type: "date", nullable: false),
                     Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CPF = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Cartao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CPF = table.Column<string>(type: "nvarchar(11)", nullable: false),
+                    Cartao = table.Column<string>(type: "nvarchar(16)", nullable: false),
                     HoraMovimentacao = table.Column<TimeOnly>(type: "time", nullable: false),
-                    Natureza = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Natureza = table.Column<string>(type: "nvarchar(10)", nullable: false),
                     Sinal = table.Column<string>(type: "nvarchar(1)", nullable: false)
                 },
                 constraints: table =>

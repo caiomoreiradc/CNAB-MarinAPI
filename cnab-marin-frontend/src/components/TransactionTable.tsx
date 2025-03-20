@@ -23,13 +23,12 @@ interface Loja {
 
 interface Transaction {
     tipo: number;
-    dataMovimentacao: string;
+    dataHoraMovimentacao: string;
     valor: number;
     cpf: string;
     cartao: string;
     loja: Loja;
     natureza: string;
-    horaMovimentacao: string;
 }
 
 interface TransactionTableProps {
@@ -64,13 +63,11 @@ const formatCurrency = (value: number) => {
     }).format(value);
 };
 
-const formatDateTime = (dateString: string , horaMovimentacao: string) => {
-    if (!dateString || typeof dateString !== "string") return "Data inválida";
-
-    const [year, month, day] = dateString.split("-");
-    if (!year || !month || !day) return "Data inválida";
-
-    return `${day}/${month}/${year}` + ` ${horaMovimentacao}`;
+const formatDateTime = (dateTimeString: string) => {
+    const date = new Date(dateTimeString);
+    return isNaN(date.getTime())
+        ? "Data inválida"
+        : date.toLocaleString("pt-BR", { timeZone: "UTC" }).replace(",", " -");
 };
 
 const formatCpf = (cpf: string) => {
@@ -153,7 +150,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions }) => 
                             <thead>
                                 <tr>
                                     <th><button onClick={() => handleSort('tipo')}>Tipo {renderSortIndicator('tipo')}</button></th>
-                                    <th><button onClick={() => handleSort('dataMovimentacao')}>Data e Hora {renderSortIndicator('dataMovimentacao')}</button></th>
+                                    <th><button onClick={() => handleSort('dataHoraMovimentacao')}>Data e Hora {renderSortIndicator('dataHoraMovimentacao')}</button></th>
                                     <th><button onClick={() => handleSort('valor')}>Valor {renderSortIndicator('valor')}</button></th>
                                     <th>CPF</th>
                                     <th>Cartão</th>
@@ -167,7 +164,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions }) => 
                                     return (
                                         <tr key={index} className="border-t">
                                             <td className={`${transactionType.color}`}>{transactionType.icon} {transactionType.name}</td>
-                                            <td>{formatDateTime(transaction.dataMovimentacao, transaction.horaMovimentacao)}</td>
+                                            <td>{formatDateTime(transaction.dataHoraMovimentacao)}</td>
                                             <td>{formatCurrency(transaction.valor)}</td>
                                             <td>{formatCpf(transaction.cpf)}</td>
                                             <td>{transaction.cartao}</td>

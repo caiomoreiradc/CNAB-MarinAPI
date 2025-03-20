@@ -58,11 +58,10 @@ namespace CNAB_MarinAPI.Services
                 {
                     Loja = loja,
                     Tipo = tipo,
-                    DataMovimentacao = DateOnly.ParseExact(linha.Substring(1, 8), "yyyyMMdd", CultureInfo.InvariantCulture),
+                    DataHoraMovimentacao = DateTime.ParseExact(linha.Substring(1, 8) + (linha.Substring(42,6)), "yyyyMMddHHmmss", CultureInfo.InvariantCulture),
                     Valor = valor,
                     CPF = linha.Substring(19, 11),
                     Cartao = linha.Substring(30, 12),
-                    HoraMovimentacao = TimeOnly.ParseExact(linha.Substring(42, 6), "HHmmss", CultureInfo.InvariantCulture),
                     Natureza = natureza,
                     Sinal = sinal
                 };
@@ -72,27 +71,6 @@ namespace CNAB_MarinAPI.Services
 
             _context.SaveChanges();
             return qtdLinhas;
-        }
-
-        // calcular o saldo de uma loja
-        public LojaSaldoDTO ObterSaldoLoja(string nomeLoja)
-        {
-            var loja = _context.Lojas.FirstOrDefault(l => l.Nome == nomeLoja);
-            if (loja == null)
-            {
-                return null;
-            }
-
-            var saldo = _context.Transacoes
-                .Where(t => t.Loja.Nome == nomeLoja)
-                .Sum(t => t.Valor);
-
-            return new LojaSaldoDTO
-            {
-                NomeLoja = loja.Nome,
-                Dono = loja.Dono,
-                Saldo = saldo
-            };
         }
     }
 }

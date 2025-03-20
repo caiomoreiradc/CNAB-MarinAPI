@@ -6,11 +6,10 @@
         public int LojaId { get; set; }
         public Loja Loja { get; set; }
         public char Tipo { get; set; }
-        public DateOnly DataMovimentacao { get; set; }
+        public DateTime DataHoraMovimentacao { get; set; }
         public decimal Valor { get; set; }
         public string CPF { get; set; }
         public string Cartao { get; set; }
-        public TimeOnly HoraMovimentacao { get; set; }
         public string Natureza { get; set; } 
         public char Sinal { get; set; } 
     }
