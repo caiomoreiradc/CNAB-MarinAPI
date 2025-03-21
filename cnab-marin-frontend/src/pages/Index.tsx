@@ -34,7 +34,7 @@ const Index: React.FC = () => {
         const fetchTransactions = async () => {
             try {
                 setIsLoadingTransactions(true);
-                const response = await fetch("https://localhost:7156/api/transacoes");
+                const response = await fetch("http://localhost:5097/api/transacoes");
                     
                 if (response.ok) {
                     const data = await response.json();
@@ -60,7 +60,7 @@ const Index: React.FC = () => {
       
       try {
         setIsLoadingLojas(true);
-        const response = await fetch("https://localhost:7156/api/lojas/saldos", {
+          const response = await fetch("http://localhost:5097/api/lojas/saldos", {
           method: 'GET',
           headers: {
             'Accept': 'application/json',

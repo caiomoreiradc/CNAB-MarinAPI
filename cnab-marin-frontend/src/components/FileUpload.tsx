@@ -68,7 +68,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUploadComplete }) => {
     setIsUploading(true);
 
     try {
-      const response = await fetch("https://localhost:7156/api/cnab/upload", {
+        const response = await fetch("http://localhost:5097/api/cnab/upload", {
         method: "POST",
         body: formData,
       });

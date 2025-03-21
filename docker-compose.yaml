@@ -1,0 +1,48 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: marincnab_sqlserver
+    environment:
+      SA_PASSWORD: "Caiosenhadev123"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer" 
+    ports:
+      - "1433:1433"
+    networks:
+      - app_network
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: marincnab_api
+    ports:
+      - "5097:5097"
+    depends_on:
+      - sqlserver
+    networks:
+      - app_network
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver, 1433;Database=marincnab_db;User Id=sa;Password=Caiosenhadev123;TrustServerCertificate=True;
+      - ASPNETCORE_URLS=http://0.0.0.0:5097
+
+  frontend:
+    build:
+      context: ./cnab-marin-frontend
+      dockerfile: Dockerfile
+    container_name: marincnab_frontend
+    ports:
+      - "3333:80"
+    depends_on:
+      - api
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  sqlserver_data:
