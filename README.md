@@ -27,7 +27,7 @@ O **CNAB MarinAPI** é um sistema desenvolvido para processar arquivos CNAB, arm
 - **Docker** - Virtualização tipo contêiner
 - **Nginx** - Configuração de proxies
 
-## 🐳 Construir e Rodar o Docker para a API
+## 🐳 Construir e Rodar o Docker 
 
 ### Passos para Construir e Executar
 
