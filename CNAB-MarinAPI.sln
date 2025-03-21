@@ -5,7 +5,7 @@ VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNAB-MarinAPI", "CNAB-MarinAPI.csproj", "{843D84BC-94B7-0F5D-5C1C-954508C50BFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNAB-Marin-Tests", "..\CNAB-Marin-Tests\CNAB-Marin-Tests.csproj", "{BE4B593F-04B5-4160-A180-0D83AD2B9FBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNAB_MarinAPI.Tests", "..\CNAB_MarinAPI.Tests\CNAB_MarinAPI.Tests.csproj", "{647AB143-200A-42B5-AF24-3ABAA947F065}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{843D84BC-94B7-0F5D-5C1C-954508C50BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{843D84BC-94B7-0F5D-5C1C-954508C50BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{843D84BC-94B7-0F5D-5C1C-954508C50BFC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE4B593F-04B5-4160-A180-0D83AD2B9FBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE4B593F-04B5-4160-A180-0D83AD2B9FBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE4B593F-04B5-4160-A180-0D83AD2B9FBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE4B593F-04B5-4160-A180-0D83AD2B9FBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{647AB143-200A-42B5-AF24-3ABAA947F065}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647AB143-200A-42B5-AF24-3ABAA947F065}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647AB143-200A-42B5-AF24-3ABAA947F065}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647AB143-200A-42B5-AF24-3ABAA947F065}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
