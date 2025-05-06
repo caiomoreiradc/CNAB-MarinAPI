@@ -1,11 +1,11 @@
 ﻿# Processador de CNAB
 
 ## 📌 Descrição  
-O **CNAB MarinAPI** é um sistema desenvolvido para processar arquivos CNAB, armazenar transações em um banco de dados e calcular o saldo de cada loja. A API valida e organiza os dados extraídos, garantindo que lojas duplicadas não sejam criadas e consolidando as informações de saldo para cada estabelecimento.  
+O **CNAB Processer** é um sistema desenvolvido para processar arquivos CNAB, armazenar transações em um banco de dados e calcular o saldo de cada loja. A API valida e organiza os dados extraídos, garantindo que lojas duplicadas não sejam criadas e consolidando as informações de saldo para cada estabelecimento.  
 
 ## 💻Interface
 
-![Interface Do Sistema](https://i.imgur.com/RtQQlaH.png "Marin CNAB")
+![Interface Do Sistema](https://i.imgur.com/RtQQlaH.png "CNAB Processer")
 
 
 ## 🚀 Tecnologias Utilizadas  
@@ -35,7 +35,7 @@ O **CNAB MarinAPI** é um sistema desenvolvido para processar arquivos CNAB, arm
 Primeiro, a pessoa precisa clonar seu repositório usando o Git. Isso pode ser feito com o seguinte comando:
 
 ```sh
-git clone https://github.com/caiomoreiradc/CNAB-MarinAPI.git
+git clone https://github.com/caiomoreiradc/CNAB-Processer.git
 ```
 
 2. **Executar o Docker Compose**:
